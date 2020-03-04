@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-use MadHarper\CommissionTask\App\CsvRequest;
+use DI\Container;
+use MadHarper\CommissionTask\App\App;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
-try {
+// -------------- Container
+/** @var Container $container */
+$container = new Container();
+$container->set('root', __DIR__);
+(require 'config/container-init.php')($container);
+// ----------------
 
-} catch (\Exception $exception) {
-    exit($exception->getMessage());
-}
-$csvRequest = new CsvRequest();
-$data = $csvRequest($argv);
-var_dump($data);
+$app = $container->get(App::class);
+$app->run($argv);
