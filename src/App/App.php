@@ -37,19 +37,6 @@ class App
 
     public function run(array $args)
     {
-//        $d = new \DateTimeImmutable('1970-01-01');
-//        var_dump($d->format('w')); die;
-
-//        $d = new \DateTimeImmutable('2020-02-23');
-//        var_dump($d->modify('Monday this week')); die;
-
-
-
-
-
-
-
-
         try {
             $rawData = $this->reader->read($args);
             $data = $this->dataParser->parse($rawData);
