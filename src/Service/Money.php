@@ -37,10 +37,22 @@ class Money
         return $this->currency;
     }
 
-    public function add(Money $money)
+    public function add(Money $money): self
     {
-        //Todo: вернуть клон
-        
+        $this->checkSameCurrency($money);
+        $result = clone($this);
+        $result->amount = $this->amount + $money->getAmount();
+
+        return $result;
+    }
+
+    public function subtract(Money $money): self
+    {
+        $this->checkSameCurrency($money);
+        $result = clone($this);
+        $result->amount = $this->amount - $money->getAmount();
+
+        return $result;
     }
 
     public function getPercent(float $percent): self
@@ -61,6 +73,41 @@ class Money
         return $result;
     }
 
+    public function greaterThan(Money $money): bool
+    {
+        $this->checkSameCurrency($money);
+
+        return $this->amount > $money->getAmount();
+    }
+
+    public function greaterOrEqual(Money $money): bool
+    {
+        $this->checkSameCurrency($money);
+
+        return $this->amount > $money->getAmount() || $this->amount === $money->getAmount();
+    }
+
+    public function lessThan(Money $money): bool
+    {
+        $this->checkSameCurrency($money);
+
+        return $this->amount < $money->getAmount();
+    }
+
+    public function lessOrEqual(Money $money): bool
+    {
+        $this->checkSameCurrency($money);
+
+        return $this->amount < $money->getAmount() || $this->amount === $money->getAmount();
+    }
+
+    private function checkSameCurrency(Money $money)
+    {
+        if ($this->currency !== $money->getCurrency()) {
+            throw new DomainException('The operation is inapplicable to different currencies');
+        }
+    }
+
     public function getPrecision(): int
     {
         switch ($this->getCurrency()) {
@@ -74,7 +121,7 @@ class Money
                 throw new DomainException('Money currency has unsupported value');
         }
     }
-    //Todo:
+
     public function __toString(): string
     {
         return number_format($this->getAmount(), $this->getPrecision(), '.', '');

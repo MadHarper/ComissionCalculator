@@ -39,13 +39,18 @@ class Transaction
      * @var Money
      */
     private $fee;
+    /**
+     * @var Money
+     */
+    private $euro;
 
     public function __construct(
         DateTimeImmutable $date,
         int $userId,
         string $userType,
         string $operationType,
-        Money $money
+        Money $money,
+        Money $euro
     )
     {
         $this->date = $date;
@@ -63,6 +68,7 @@ class Transaction
 
         $this->userType = $userType;
         $this->money = $money;
+        $this->euro = $euro;
     }
 
     public function getDate(): DateTimeImmutable
@@ -90,6 +96,11 @@ class Transaction
         return $this->money;
     }
 
+    public function getEuro(): Money
+    {
+        return $this->euro;
+    }
+
     public function getStartOfWeek(): DateTimeImmutable
     {
         return $this->date->modify('Monday this week');
@@ -110,13 +121,18 @@ class Transaction
         return $this->fee;
     }
 
-    public function hasCachOutType()
+    public function hasCachOutType(): bool
     {
         return $this->operationType === self::CASH_OUT_OPERATION_TYPE;
     }
 
-    public function hasCachInType()
+    public function hasCachInType(): bool
     {
         return $this->operationType === self::CASH_IN_OPERATION_TYPE;
+    }
+
+    public function isNaturalPerson(): bool
+    {
+        return $this->userType === self::NATURAL_PERSON_TYPE;
     }
 }

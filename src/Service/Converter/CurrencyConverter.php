@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MadHarper\CommissionTask\Service\Converter;
 
 use MadHarper\CommissionTask\Service\Money;
+use DomainException;
 
 class CurrencyConverter implements CurrencyConverterInterface
 {
@@ -17,7 +18,19 @@ class CurrencyConverter implements CurrencyConverterInterface
 
     public function convert(Money $money, string $toCurrency): Money
     {
-        // TODO: Implement convert() method.
+        $fromCurrency = $money->getCurrency();
+        $this->check($fromCurrency);
+        $this->check($toCurrency);
+        $convertedAmount = $this->rates[$toCurrency] / $this->rates[$fromCurrency] * $money->getAmount();
+
+        return new Money($convertedAmount, $toCurrency);
+    }
+
+    private function check(string $currency)
+    {
+        if (!array_key_exists($currency, $this->rates)) {
+            throw new DomainException(sprintf('No currency rate for %s', $currency));
+        }
     }
 
     /**

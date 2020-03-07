@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MadHarper\CommissionTask\Service\Calculator;
 
-use MadHarper\CommissionTask\Service\Converter\CurrencyConverterInterface;
+use DomainException;
 use MadHarper\CommissionTask\Service\Transaction;
 use MadHarper\CommissionTask\Service\WeekCashOutCollection;
 use MadHarper\CommissionTask\Service\TransactionCollection;
@@ -16,22 +16,38 @@ class FeeCalculator implements FeeCalculatorInterface
      */
     private $weekCashOutCollection;
     /**
-     * @var CurrencyConverterInterface
+     * @var CashInFeeCalculatorInterface
      */
-    private $converter;
+    private $cashInFeeCalculator;
+    /**
+     * @var CashOutFeeCalculatorInterface
+     */
+    private $cashOutFeeCalculator;
 
-    public function __construct(WeekCashOutCollection $weekCashOutCollection, CurrencyConverterInterface $converter)
+    public function __construct(
+        WeekCashOutCollection $weekCashOutCollection,
+        CashInFeeCalculatorInterface $cashInFeeCalculator,
+        CashOutFeeCalculatorInterface $cashOutFeeCalculator
+    )
     {
         $this->weekCashOutCollection = $weekCashOutCollection;
-        $this->converter = $converter;
+        $this->cashInFeeCalculator = $cashInFeeCalculator;
+        $this->cashOutFeeCalculator = $cashOutFeeCalculator;
     }
 
     public function calculate(TransactionCollection $transactionCollection)
     {
         /** @var Transaction $transaction */
         foreach ($transactionCollection as $transaction) {
+            if (Transaction::CASH_IN_OPERATION_TYPE === $transaction->getOperationType()) {
+                $fee = $this->cashInFeeCalculator->calculateCashInFee($transaction);
+            } elseif (Transaction::CASH_OUT_OPERATION_TYPE === $transaction->getOperationType()) {
+                $fee = $this->cashOutFeeCalculator->calculateCashOutFee($transaction, $this->weekCashOutCollection);
+            } else {
+                throw new DomainException('Undefined transaction type.');
+            }
 
-            echo $transaction->getMoney()->getPercent(0.033)->round() . PHP_EOL;
+            $transaction->setFee($fee);
             $this->weekCashOutCollection->add($transaction);
         }
     }

@@ -4,25 +4,14 @@ declare(strict_types=1);
 
 namespace MadHarper\CommissionTask\Service;
 
-use MadHarper\CommissionTask\Service\Converter\CurrencyConverterInterface;
-
 class WeekCashOutCollection
 {
     /**
      * @var WeekCashOut[]
      */
     private $collection = [];
-    /**
-     * @var CurrencyConverterInterface
-     */
-    private $converter;
 
-    public function __construct(CurrencyConverterInterface $converter)
-    {
-        $this->converter = $converter;
-    }
-
-    public function getByTransaction(Transaction $transaction): Money
+    public function getWeekSum(Transaction $transaction): Money
     {
         if ($this->match($transaction)) {
             return ($this->collection[$transaction->getUserId()])->getWeekSum();
@@ -31,7 +20,21 @@ class WeekCashOutCollection
         return new Money(0, Money::EUR);
     }
 
-    // collection contains searching data by id and week start
+    public function getWeekCount(Transaction $transaction): int
+    {
+        if ($this->match($transaction)) {
+            return ($this->collection[$transaction->getUserId()])->getWeekCount();
+        }
+
+        return 0;
+    }
+
+    /**
+     * search transaction history by week start
+     *
+     * @param Transaction $transaction
+     * @return bool
+     */
     public function match(Transaction $transaction): bool
     {
         return isset($this->collection[$transaction->getUserId()]) && $this->isSameWeek($transaction);
@@ -45,14 +48,14 @@ class WeekCashOutCollection
 
     public function add(Transaction $transaction)
     {
-        if (!$transaction->hasCachOutType()) {
+        if (!$transaction->hasCachOutType() || !$transaction->isNaturalPerson()) {
             return;
         }
 
         if ($this->match($transaction)) {
-            //ToDo: добавить сумму
+            $this->collection[$transaction->getUserId()]->add($transaction);
+        } else {
+            $this->collection[$transaction->getUserId()] = new WeekCashOut($transaction);
         }
-
-        $this->collection[$transaction->getUserId()] = new WeekCashOut($transaction);
     }
 }

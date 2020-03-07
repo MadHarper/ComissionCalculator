@@ -16,10 +16,14 @@ class WeekCashOut
      * @var DateTimeImmutable
      */
     private $startOfWeek;
+    /**
+     * @var int
+     */
+    private $count = 1;
 
     public function __construct(Transaction $transaction)
     {
-        $this->weekSum = $transaction->getMoney();
+        $this->weekSum = $transaction->getEuro();
         $this->startOfWeek = $transaction->getStartOfWeek();
     }
 
@@ -43,5 +47,14 @@ class WeekCashOut
         return $this->weekSum;
     }
 
-    // Todo: pubf add()
+    public function getWeekCount(): int
+    {
+        return $this->count;
+    }
+
+    public function add(Transaction $transaction)
+    {
+        $this->weekSum = $this->weekSum->add($transaction->getEuro());
+        ++$this->count;
+    }
 }

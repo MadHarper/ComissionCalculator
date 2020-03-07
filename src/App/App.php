@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace MadHarper\CommissionTask\App;
 
+use Exception;
 use MadHarper\CommissionTask\Service\DataParser;
 use MadHarper\CommissionTask\Service\Calculator\FeeCalculatorInterface;
+use MadHarper\CommissionTask\Service\Transaction;
 
 /**
  * Class App
@@ -52,9 +54,13 @@ class App
             $rawData = $this->reader->read($args);
             $data = $this->dataParser->parse($rawData);
             $this->feeCalculator->calculate($data);
-            var_dump(1);die;
 
-        } catch (\Exception $exception) {
+            /** @var Transaction $d */
+            foreach ($data as $d) {
+                echo $d->getFee() . PHP_EOL;
+            }
+
+        } catch (Exception $exception) {
             exit($exception->getMessage() . PHP_EOL);
         }
     }

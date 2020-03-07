@@ -9,6 +9,7 @@ use ArrayIterator;
 
 class TransactionCollection implements IteratorAggregate
 {
+    /** @var Transaction[] */
     private $transactions = [];
 
     public function getIterator()
