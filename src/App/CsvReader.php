@@ -10,7 +10,7 @@ use InvalidArgumentException;
  * Class CsvReader
  * Read data from csv file
  */
-class CsvReader implements DataReader
+class CsvReader implements DataReaderInterface
 {
     const DELIMITER = ',';
 

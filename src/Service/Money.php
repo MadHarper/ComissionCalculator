@@ -40,7 +40,7 @@ class Money
     public function add(Money $money): self
     {
         $this->checkSameCurrency($money);
-        $result = clone($this);
+        $result = clone $this;
         $result->amount = $this->amount + $money->getAmount();
 
         return $result;
@@ -49,7 +49,7 @@ class Money
     public function subtract(Money $money): self
     {
         $this->checkSameCurrency($money);
-        $result = clone($this);
+        $result = clone $this;
         $result->amount = $this->amount - $money->getAmount();
 
         return $result;
@@ -57,7 +57,7 @@ class Money
 
     public function getPercent(float $percent): self
     {
-        $result = clone($this);
+        $result = clone $this;
         $result->amount = $this->amount / 100 * $percent;
 
         return $result;
@@ -67,11 +67,19 @@ class Money
     {
         $fact = 10 ** $this->getPrecision();
         $roundedAmount = ceil($fact * $this->amount) / $fact;
-        $result = clone($this);
+        $result = clone $this;
         $result->amount = $roundedAmount;
 
         return $result;
     }
+
+    public function equal(Money $money): bool
+    {
+        $this->checkSameCurrency($money);
+
+        return $this->amount === $money->getAmount();
+    }
+
 
     public function greaterThan(Money $money): bool
     {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace MadHarper\CommissionTask\App;
 
 use Exception;
-use MadHarper\CommissionTask\Service\DataParser;
 use MadHarper\CommissionTask\Service\Calculator\FeeCalculatorInterface;
+use MadHarper\CommissionTask\Service\DataParser;
 use MadHarper\CommissionTask\Service\Transaction;
 
 /**
@@ -16,7 +16,7 @@ use MadHarper\CommissionTask\Service\Transaction;
 class App
 {
     /**
-     * @var DataReader
+     * @var DataReaderInterface
      */
     private $reader;
     /**
@@ -28,7 +28,7 @@ class App
      */
     private $feeCalculator;
 
-    public function __construct(DataReader $reader, DataParser $dataParser, FeeCalculatorInterface $feeCalculator)
+    public function __construct(DataReaderInterface $reader, DataParser $dataParser, FeeCalculatorInterface $feeCalculator)
     {
         $this->reader = $reader;
         $this->dataParser = $dataParser;
@@ -44,11 +44,11 @@ class App
 
             /** @var Transaction $d */
             foreach ($data as $d) {
-                echo $d->getFee() . PHP_EOL;
+                echo $d->getFee().PHP_EOL;
             }
 
         } catch (Exception $exception) {
-            exit($exception->getMessage() . PHP_EOL);
+            exit($exception->getMessage().PHP_EOL);
         }
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use DI\Container;
 use MadHarper\CommissionTask\App\App;
-use MadHarper\CommissionTask\App\DataReader;
+use MadHarper\CommissionTask\App\DataReaderInterface;
 use MadHarper\CommissionTask\App\CsvReader;
 use MadHarper\CommissionTask\Service\Calculator\CashInFeeCalculatorInterface;
 use MadHarper\CommissionTask\Service\Converter\CurrencyConverter;
@@ -24,7 +24,7 @@ return function(Container $container)
         return new DataParser($container->get(CurrencyConverterInterface::class));
     });
 
-    $container->set(DataReader::class, function (Container $container){
+    $container->set(DataReaderInterface::class, function (Container $container){
         return new CsvReader($container->get('root'));
     });
 
@@ -63,10 +63,9 @@ return function(Container $container)
 
     $container->set(App::class, function (Container $container){
         return new App(
-            $container->get(DataReader::class),
+            $container->get(DataReaderInterface::class),
             $container->get(DataParser::class),
             $container->get(FeeCalculatorInterface::class)
         );
     });
-
 };

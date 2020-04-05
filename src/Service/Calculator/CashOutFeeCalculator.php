@@ -21,9 +21,6 @@ class CashOutFeeCalculator implements CashOutFeeCalculatorInterface
     const CASH_OUT_WEEK_DISCOUNT_COUNT = 3;
     const CASH_OUT_DEFAULT_FEE_PERCENTS = .3;
 
-    /**
-     * @var CurrencyConverterInterface
-     */
     private $converter;
 
     private $legalMinFeeMoney;

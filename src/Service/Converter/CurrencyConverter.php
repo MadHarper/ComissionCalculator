@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MadHarper\CommissionTask\Service\Converter;
 
-use MadHarper\CommissionTask\Service\Money;
 use DomainException;
+use MadHarper\CommissionTask\Service\Money;
 
 class CurrencyConverter implements CurrencyConverterInterface
 {
@@ -35,12 +35,16 @@ class CurrencyConverter implements CurrencyConverterInterface
 
     /**
      *  Change current rate method
-     *
-     * @param string $currency
-     * @param float $rate
      */
     public function setRate(string $currency, float $rate)
     {
         $this->rates[$currency] = $rate;
+    }
+
+    public function getRate(string $currency): float
+    {
+        $this->check($currency);
+
+        return $this->rates[$currency];
     }
 }

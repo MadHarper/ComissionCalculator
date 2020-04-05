@@ -121,12 +121,12 @@ class Transaction
         return $this->fee;
     }
 
-    public function hasCachOutType(): bool
+    public function hasCashOutType(): bool
     {
         return $this->operationType === self::CASH_OUT_OPERATION_TYPE;
     }
 
-    public function hasCachInType(): bool
+    public function hasCashInType(): bool
     {
         return $this->operationType === self::CASH_IN_OPERATION_TYPE;
     }

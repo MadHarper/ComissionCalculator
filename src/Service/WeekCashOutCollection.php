@@ -31,9 +31,6 @@ class WeekCashOutCollection
 
     /**
      * search transaction history by week start
-     *
-     * @param Transaction $transaction
-     * @return bool
      */
     public function match(Transaction $transaction): bool
     {
@@ -48,7 +45,7 @@ class WeekCashOutCollection
 
     public function add(Transaction $transaction)
     {
-        if (!$transaction->hasCachOutType() || !$transaction->isNaturalPerson()) {
+        if (!$transaction->hasCashOutType() || !$transaction->isNaturalPerson()) {
             return;
         }
 
