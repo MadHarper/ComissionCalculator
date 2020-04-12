@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MadHarper\CommissionTask\Service;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
 class TransactionCollection implements IteratorAggregate
 {

@@ -9,8 +9,8 @@ use DomainException;
 
 class Transaction
 {
-    const CASH_IN_OPERATION_TYPE    = 'cash_in';
-    const CASH_OUT_OPERATION_TYPE   = 'cash_out';
+    const CASH_IN_OPERATION_TYPE = 'cash_in';
+    const CASH_OUT_OPERATION_TYPE = 'cash_out';
 
     const LEGAL_PERSON_TYPE = 'legal';
     const NATURAL_PERSON_TYPE = 'natural';
@@ -51,8 +51,7 @@ class Transaction
         string $operationType,
         Money $money,
         Money $euro
-    )
-    {
+    ) {
         $this->date = $date;
         $this->userId = $userId;
 

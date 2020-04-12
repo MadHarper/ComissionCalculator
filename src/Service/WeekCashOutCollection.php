@@ -30,7 +30,7 @@ class WeekCashOutCollection
     }
 
     /**
-     * search transaction history by week start
+     * search transaction history by week start.
      */
     public function match(Transaction $transaction): bool
     {

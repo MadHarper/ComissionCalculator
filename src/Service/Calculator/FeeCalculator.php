@@ -6,8 +6,8 @@ namespace MadHarper\CommissionTask\Service\Calculator;
 
 use DomainException;
 use MadHarper\CommissionTask\Service\Transaction;
-use MadHarper\CommissionTask\Service\WeekCashOutCollection;
 use MadHarper\CommissionTask\Service\TransactionCollection;
+use MadHarper\CommissionTask\Service\WeekCashOutCollection;
 
 class FeeCalculator implements FeeCalculatorInterface
 {
@@ -28,8 +28,7 @@ class FeeCalculator implements FeeCalculatorInterface
         WeekCashOutCollection $weekCashOutCollection,
         CashInFeeCalculatorInterface $cashInFeeCalculator,
         CashOutFeeCalculatorInterface $cashOutFeeCalculator
-    )
-    {
+    ) {
         $this->weekCashOutCollection = $weekCashOutCollection;
         $this->cashInFeeCalculator = $cashInFeeCalculator;
         $this->cashOutFeeCalculator = $cashOutFeeCalculator;

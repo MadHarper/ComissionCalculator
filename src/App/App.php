@@ -11,7 +11,7 @@ use MadHarper\CommissionTask\Service\Transaction;
 
 /**
  * Class App
- * Root class of application
+ * Root class of application.
  */
 class App
 {
@@ -46,7 +46,6 @@ class App
             foreach ($data as $d) {
                 echo $d->getFee().PHP_EOL;
             }
-
         } catch (Exception $exception) {
             exit($exception->getMessage().PHP_EOL);
         }

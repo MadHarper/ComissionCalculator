@@ -80,7 +80,6 @@ class Money
         return $this->amount === $money->getAmount();
     }
 
-
     public function greaterThan(Money $money): bool
     {
         $this->checkSameCurrency($money);
@@ -119,9 +118,9 @@ class Money
     public function getPrecision(): int
     {
         switch ($this->getCurrency()) {
-            case self::EUR :
+            case self::EUR:
                 return 2;
-            case self::USD :
+            case self::USD:
                 return 2;
             case self::JPY:
                 return 0;

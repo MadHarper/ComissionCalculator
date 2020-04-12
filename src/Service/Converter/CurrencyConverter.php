@@ -34,7 +34,7 @@ class CurrencyConverter implements CurrencyConverterInterface
     }
 
     /**
-     *  Change current rate method
+     *  Change current rate method.
      */
     public function setRate(string $currency, float $rate)
     {

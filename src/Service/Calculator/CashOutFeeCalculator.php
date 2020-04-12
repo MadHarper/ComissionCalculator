@@ -15,7 +15,7 @@ class CashOutFeeCalculator implements CashOutFeeCalculatorInterface
     const CURRENCY = Money::EUR;
 
     const CASH_OUT_LEGAL_FEE = .3;
-    const CASH_OUT_LEGAL_FEE_MIN_AMOUNT =  .5;
+    const CASH_OUT_LEGAL_FEE_MIN_AMOUNT = .5;
 
     const CASH_OUT_NATURAL_WEEK_FREE = 1000;
     const CASH_OUT_WEEK_DISCOUNT_COUNT = 3;
@@ -85,6 +85,7 @@ class CashOutFeeCalculator implements CashOutFeeCalculatorInterface
         }
 
         $fee = $excess->getPercent(self::CASH_OUT_DEFAULT_FEE_PERCENTS);
+
         return $this
             ->converter
             ->convert($fee, $money->getCurrency())

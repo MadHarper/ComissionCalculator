@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 /**
  * Class CsvReader
- * Read data from csv file
+ * Read data from csv file.
  */
 class CsvReader implements DataReaderInterface
 {
@@ -34,8 +34,8 @@ class CsvReader implements DataReaderInterface
         }
 
         $list = [];
-        if (($fp = fopen($path, 'rb')) !== FALSE) {
-            while (($data = fgetcsv($fp, 0, self::DELIMITER)) !== FALSE) {
+        if (($fp = fopen($path, 'rb')) !== false) {
+            while (($data = fgetcsv($fp, 0, self::DELIMITER)) !== false) {
                 $list[] = $data;
             }
             fclose($fp);
