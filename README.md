@@ -118,13 +118,3 @@ all requirements must be met;
 code quality - it's maintainability, extensibility, testability; speed of the system can also be considered, but is not as important as other criteria.
 Task Submission
 You can put the code publicly (in github or similar code control systems) if you want, but please note the requirement about Paysera name usage.
-
-Send it in your favourite format (link to versioned code, code in zip file etc.) to one of the following emails based on your city, unless instructed otherwise:
-
-code-vilnius@paysera.com
-code-kaunas@paysera.com
-code-sofia@paysera.com
-code-manila@paysera.com
-code-dhaka@paysera.com
-code-saint-petersburg@paysera.com
-code-plovdiv@paysera.com
